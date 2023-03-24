@@ -1,0 +1,22 @@
+{
+  "name": "school-ms",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/server.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlenDavis/school-ms.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlenDavis/school-ms/issues"
+  },
+  "homepage": "https://github.com/AlenDavis/school-ms#readme",
+  "dependencies": {
+    "ts-node": "^10.9.1"
+  }
+}
