@@ -1,25 +1,26 @@
-import express, { Request, Response } from 'express';
+/* eslint-disable prettier/prettier */
+import express, { Request, Response } from "express";
 
-import {BaseController} from './base_controller';
+import { BaseController } from "./base_controller";
 
-export class HomeController implements BaseController{
-    public basePath:string = '/';
-    public router:express.Router;
+export class HomeController implements BaseController {
+    public basePath = "/Home";
+    public router: express.Router;
 
-    constructor(){
+    constructor() {
         this.router = express.Router();
-        this.initialzeRoutes()
+        this.initialzeRoutes();
     }
 
-    private async  initialzeRoutes() {
+    private async initialzeRoutes() {
         this.router.get(this.basePath, this.index);
-        
+        this.router.get(`${this.basePath}/teacher`, this.teacher);
     }
-
-    private async index(request:Request, response:Response){
-        response.send('Hello World');
-
+    private async teacher(request: Request, response: Response) {
+        console.log(request.query, "test");
+        response.send("Enroll Teacher");
     }
-
-
+    private async index(request: Request, response: Response) {
+        response.send("Hello World");
+    }
 }

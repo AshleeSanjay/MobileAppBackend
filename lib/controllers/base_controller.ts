@@ -1,6 +1,6 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response } from "express";
 
 export interface BaseController {
-  router: express.Router;
-  basePath: String;
+    router: express.Router;
+    basePath: string;
 }
