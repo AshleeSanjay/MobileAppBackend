@@ -4,8 +4,8 @@ import express, { Request, Response } from "express";
 import { BaseController } from "./base_controller";
 import { dbSchoolApp } from "../../app";
 
-export class TeacherController implements BaseController {
-    public basePath = "/Teacher";
+export class StudentController implements BaseController {
+    public basePath = "/Student";
     public router: express.Router;
 
     constructor() {
@@ -20,7 +20,7 @@ export class TeacherController implements BaseController {
     }
     private async enroll(request: Request, response: Response) {
         try {
-            await dbSchoolApp.collection("teacher").insertOne({
+            await dbSchoolApp.collection("student").insertOne({
                 name: request.body.name,
                 email: request.body.email,
                 mobile: request.body.mobile,
@@ -32,22 +32,21 @@ export class TeacherController implements BaseController {
                 "Dd collection: ",
                 dbSchoolApp.databaseName
             );
-            response.send("Enroll Teacher");
+            response.send("Enroll Student");
         } catch (error) {
             response.status(500).send({ error: `${error}` });
         }
     }
     private async profile(request: Request, response: Response) {
-        // try {
-        //     console.log("Profile");
-        //     const cursor = await dbSchoolApp.collection("teacher").findOne({
-        //         name: request.body.name,
-        //     });
-        //     return response.json(cursor);
-        //     console.log(response.json(cursor));
-        // } catch (error) {
-        //     response.status(500).send({ error: `${error}` });
-        // }
+        try {
+            const cursor = await dbSchoolApp.collection("student").findOne({
+                name: request.body.name,
+            });
+            return response.json(cursor);
+            console.log(response.json(cursor));
+        } catch (error) {
+            response.status(500).send({ error: `${error}` });
+        }
 
         console.log(request.query);
         response.send("Teacher Profile");

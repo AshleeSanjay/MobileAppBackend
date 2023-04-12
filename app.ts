@@ -13,7 +13,7 @@ import {
     status,
 } from "migrate-mongo";
 
-import cors from 'cors';
+import cors from "cors";
 
 export let dbSchoolApp: Db;
 export class App {

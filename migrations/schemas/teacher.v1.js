@@ -16,7 +16,7 @@ module.exports = {
                 password: {
                     bsonType: "string",
                 },
-                category: {
+                userType: {
                     bsonType: "double",
                 },
             },
