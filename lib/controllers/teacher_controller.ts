@@ -19,24 +19,30 @@ export class TeacherController implements BaseController {
         this.router.get(`${this.basePath}/me`, this.me);
     }
     private async enroll(request: Request, response: Response) {
-        console.log(request.body);
-        dbSchoolApp.collection("teacher").insertOne({
-            name: request.body.name,
-            email: request.body.email,
-            mobile: request.body.mobile,
-            password: request.body.password,
-            category: request.body.category,
-        });
-        // dbSchoolApp.collection("teacher").insertOne({
-        //     name: request.query.name,
-        //     email: request.query.email,
-        // });
-        // dbSchoolApp.collection("teacher").insertOne({
-        //     name: "demo",
-        //     email: "a@gmail.com",
-        // });
-        console.log(request.query, "Dd collection: ", dbSchoolApp.databaseName);
-        response.send("Enroll Teacher");
+        try {
+            await dbSchoolApp.collection("teacher").insertOne({
+                name: request.body.name,
+                email: request.body.email,
+                mobile: request.body.mobile,
+                password: request.body.password,
+                category: request.body.category,
+            });
+            // dbSchoolApp.collection("teacher").insertOne({
+            //     name: request.query.name,
+            //     email: request.query.email,
+            // });
+            // dbSchoolApp.collection("teacher").insertOne({
+            //     name: "demo",
+            //     email: "a@gmail.com",
+            // });
+            console.log(request.query, "Dd collection: ", dbSchoolApp.databaseName);
+            response.send("Enroll Teacher");
+            
+        } catch (error) {
+            response.status(500).send({error:`${error}`})
+        }
+
+        
     }
     private async me(request: Request, response: Response) {
         console.log(request.query);

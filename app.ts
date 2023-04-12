@@ -12,6 +12,9 @@ import {
     down,
     status,
 } from "migrate-mongo";
+
+import cors from 'cors';
+
 export let dbSchoolApp: Db;
 export class App {
     public port: string;
@@ -35,6 +38,7 @@ export class App {
             req.body = JSON.parse(decode(JSON.stringify(req.body)));
             next();
         });
+        this.app.use(cors());
     }
 
     private async initializeControllers(controllers: BaseController[]) {
