@@ -13,14 +13,14 @@ export class HomeController implements BaseController {
     }
 
     private async initialzeRoutes() {
-        this.router.get(this.basePath, this.index);
-        this.router.get(`${this.basePath}/teacher`, this.teacher);
+        // this.router.get(this.basePath, this.index);
+        // this.router.get(`${this.basePath}/teacher`, this.teacher);
     }
-    private async teacher(request: Request, response: Response) {
-        console.log(request.query, "test");
-        response.send("Enroll Teacher");
-    }
-    private async index(request: Request, response: Response) {
-        response.send("Hello World");
-    }
+    // private async teacher(request: Request, response: Response) {
+    //     console.log(request.query, "test");
+    //     response.send("Enroll Teacher");
+    // }
+    // private async index(request: Request, response: Response) {
+    //     response.send("Hello World");
+    // }
 }

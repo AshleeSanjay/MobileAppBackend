@@ -39,16 +39,16 @@ export class StudentController implements BaseController {
     }
     private async profile(request: Request, response: Response) {
         try {
-            const cursor = await dbSchoolApp.collection("student").findOne({
-                name: request.body.name,
-            });
-            return response.json(cursor);
-            console.log(response.json(cursor));
+            // const cursor = await dbSchoolApp.collection("student").findOne({
+            //     name: request.body.name,
+            // });
+            // return response.json(cursor);
+            // console.log(response.json(cursor));
         } catch (error) {
             response.status(500).send({ error: `${error}` });
         }
 
         console.log(request.query);
-        response.send("Teacher Profile");
+        response.send("Student Profile");
     }
 }

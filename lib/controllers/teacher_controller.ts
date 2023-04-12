@@ -34,20 +34,21 @@ export class TeacherController implements BaseController {
             );
             response.send("Enroll Teacher");
         } catch (error) {
+            // console.log(error);
             response.status(500).send({ error: `${error}` });
         }
     }
     private async profile(request: Request, response: Response) {
-        // try {
-        //     console.log("Profile");
-        //     const cursor = await dbSchoolApp.collection("teacher").findOne({
-        //         name: request.body.name,
-        //     });
-        //     return response.json(cursor);
-        //     console.log(response.json(cursor));
-        // } catch (error) {
-        //     response.status(500).send({ error: `${error}` });
-        // }
+        try {
+            console.log("Profile");
+            const cursor = await dbSchoolApp.collection("teacher").findOne({
+                name: request.query.name,
+            });
+            return response.json(cursor);
+            console.log(response.json(cursor));
+        } catch (error) {
+            response.status(500).send({ error: `${error}` });
+        }
 
         console.log(request.query);
         response.send("Teacher Profile");
