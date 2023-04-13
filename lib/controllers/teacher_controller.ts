@@ -22,9 +22,9 @@ export class TeacherController implements BaseController {
         try {
             await dbSchoolApp.collection("teacher").insertOne({
                 name: request.body.name,
+                cognitoId:request.body.cognitoId,
                 email: request.body.email,
                 mobile: request.body.mobile,
-                password: request.body.password,
                 userType: request.body.userType,
             });
             console.log(
@@ -34,7 +34,7 @@ export class TeacherController implements BaseController {
             );
             response.send("Enroll Teacher");
         } catch (error) {
-            // console.log(error);
+             console.log(error);
             response.status(500).send({ error: `${error}` });
         }
     }

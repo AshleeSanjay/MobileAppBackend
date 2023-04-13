@@ -2,10 +2,13 @@ module.exports = {
     validator: {
         $jsonSchema: {
             bsonType: "object",
-            required: ["fname", "email", "mobile", "password"],
+            required: ["email"],
             properties: {
                 name: {
                     bsonType: "string",
+                },
+                cognitoId:{
+                    bsonType:"string",
                 },
                 email: {
                     bsonType: "string",
@@ -13,12 +16,9 @@ module.exports = {
                 mobile: {
                     bsonType: "string",
                 },
-                password: {
-                    bsonType: "string",
-                },
                 userType: {
-                    bsonType: "double",
-                },
+                    bsonType: "string",
+                }
             },
         },
     },
