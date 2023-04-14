@@ -4,8 +4,8 @@ dotenv.config();
 const config = {
     mongodb: {
         // TODO Change (or review) the url to your MongoDB:
-        url: process.env.MONGO_CONNECTION_URI,
-        //url: "mongodb://127.0.0.1:27017",
+        //url: process.env.MONGO_CONNECTION_URI,
+        url: "mongodb://127.0.0.1:27017",
 
         // TODO Change this to your database name:
         databaseName: "dev-schoolmobapp",

@@ -20,9 +20,10 @@ export class TeacherController implements BaseController {
     }
     private async enroll(request: Request, response: Response) {
         try {
+            console.log("DB connected");
             await dbSchoolApp.collection("teacher").insertOne({
                 name: request.body.name,
-                cognitoId:request.body.cognitoId,
+                cognitoId: request.body.cognitoId,
                 email: request.body.email,
                 mobile: request.body.mobile,
                 userType: request.body.userType,
@@ -34,7 +35,7 @@ export class TeacherController implements BaseController {
             );
             response.send("Enroll Teacher");
         } catch (error) {
-             console.log(error);
+            console.log(error);
             response.status(500).send({ error: `${error}` });
         }
     }

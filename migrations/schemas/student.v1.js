@@ -7,7 +7,7 @@ module.exports = {
                 name: {
                     bsonType: "string",
                 },
-                cognitoId: {
+                cognitoSid: {
                     bsonType: "string",
                 },
                 email: {
