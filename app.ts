@@ -3,6 +3,7 @@ import { decode } from "html-entities";
 import { BaseController } from "./lib/controllers/base_controller";
 import { Db, MongoClient } from "mongodb";
 import { MONGO_CONNECTION_URI, NODE_ENV } from "./constants";
+
 import {
     init,
     create,
@@ -67,15 +68,5 @@ export class App {
                 `Server started at port ${this.port} in ${NODE_ENV} mode`
             );
         });
-        // mongoClient.connect().then(() => {
-        //   console.log('SUCCESS! connected to Mongo');
-        //   this.app.listen(this.port, () => {
-        //     console.log(`Server started at ${this.port}`);
-        //   });
-        // }).catch((err) => {
-        //   console.log(err);
-        //   console.log('Disconnecting from Mongo');
-        //   mongoClient.close();
-        // });
     }
 }

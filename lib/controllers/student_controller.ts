@@ -3,6 +3,7 @@ import express, { Request, Response } from "express";
 
 import { BaseController } from "./base_controller";
 import { dbSchoolApp } from "../../app";
+import { authorizationMiddleware } from "./middlewares/authorizationMiddleware";
 
 export class StudentController implements BaseController {
     public basePath = "/Student";
@@ -14,8 +15,8 @@ export class StudentController implements BaseController {
     }
 
     private async initialzeRoutes() {
-        // this.router.get(`${this.basePath}/enroll`, this.enroll);
         this.router.post(`${this.basePath}/enroll`, this.enroll);
+        this.router.use(`${this.basePath}/profile`, authorizationMiddleware);
         this.router.get(`${this.basePath}/profile`, this.profile);
     }
     private async enroll(request: Request, response: Response) {
@@ -39,16 +40,16 @@ export class StudentController implements BaseController {
     }
     private async profile(request: Request, response: Response) {
         try {
-            // const cursor = await dbSchoolApp.collection("student").findOne({
-            //     name: request.body.name,
-            // });
-            // return response.json(cursor);
-            // console.log(response.json(cursor));
+            console.log("Student Profile");
+            const cursor = await dbSchoolApp.collection("student").findOne({
+                email: request.query.email,
+            });
+            console.log(cursor);
+            response.send(cursor);
         } catch (error) {
-            response.status(500).send({ error: `${error}` });
+            response.status(500).json({ error: `${error}` });
         }
-
-        console.log(request.query);
-        response.send("Student Profile");
+        // console.log(request.query);
+        // response.send("Student Profile");
     }
 }

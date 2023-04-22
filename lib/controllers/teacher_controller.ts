@@ -3,6 +3,7 @@ import express, { Request, Response } from "express";
 
 import { BaseController } from "./base_controller";
 import { dbSchoolApp } from "../../app";
+import { authorizationMiddleware } from "./middlewares/authorizationMiddleware";
 
 export class TeacherController implements BaseController {
     public basePath = "/Teacher";
@@ -14,8 +15,8 @@ export class TeacherController implements BaseController {
     }
 
     private async initialzeRoutes() {
-        // this.router.get(`${this.basePath}/enroll`, this.enroll);
         this.router.post(`${this.basePath}/enroll`, this.enroll);
+        this.router.use(`${this.basePath}/profile`, authorizationMiddleware);
         this.router.get(`${this.basePath}/profile`, this.profile);
     }
     private async enroll(request: Request, response: Response) {
@@ -43,15 +44,12 @@ export class TeacherController implements BaseController {
         try {
             console.log("Profile");
             const cursor = await dbSchoolApp.collection("teacher").findOne({
-                name: request.query.name,
+                email: request.query.email,
             });
-            return response.json(cursor);
-            console.log(response.json(cursor));
+            console.log(cursor);
+            response.send(cursor);
         } catch (error) {
-            response.status(500).send({ error: `${error}` });
+            response.status(500).json({ error: `${error}` });
         }
-
-        console.log(request.query);
-        response.send("Teacher Profile");
     }
 }
