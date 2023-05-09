@@ -4,7 +4,8 @@ import express, { Request, Response } from "express";
 import { BaseController } from "./base_controller";
 
 export class HomeController implements BaseController {
-    public basePath = "/Home";
+    public basePath = "/";
+    
     public router: express.Router;
 
     constructor() {
@@ -13,14 +14,10 @@ export class HomeController implements BaseController {
     }
 
     private async initialzeRoutes() {
-        // this.router.get(this.basePath, this.index);
-        // this.router.get(`${this.basePath}/teacher`, this.teacher);
+         this.router.get(this.basePath, this.index);
     }
-    // private async teacher(request: Request, response: Response) {
-    //     console.log(request.query, "test");
-    //     response.send("Enroll Teacher");
-    // }
-    // private async index(request: Request, response: Response) {
-    //     response.send("Hello World");
-    // }
+
+     private async index(request: Request, response: Response) {
+         response.send("Hello World");
+     }
 }

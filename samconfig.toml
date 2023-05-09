@@ -1,0 +1,11 @@
+version = 0.1
+[default.deploy.parameters]
+stack_name = "school-ms-stack"
+resolve_s3 = true
+s3_prefix = "school-ms-stack"
+region = "us-east-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+disable_rollback = true
+parameter_overrides = "Environment=\"dev\" NodeEnv=\"development\" MongoDbDatabase=\"dev-user-db\" MongodbUri=\"mongodb+srv://alen:Testing1234@schoolcluster.ovwprmi.mongodb.net/test\" MongodbConnectionUri=\"mongodb+srv://alen:Testing1234@schoolcluster.ovwprmi.mongodb.net/test\" ApplicationName=\"school-ms\""
+image_repositories = []

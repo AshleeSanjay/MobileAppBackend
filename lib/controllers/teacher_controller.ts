@@ -15,9 +15,14 @@ export class TeacherController implements BaseController {
     }
 
     private async initialzeRoutes() {
+        this.router.get(`${this.basePath}/`, this.status);
         this.router.post(`${this.basePath}/enroll`, this.enroll);
         this.router.use(`${this.basePath}/profile`, authorizationMiddleware);
         this.router.get(`${this.basePath}/profile`, this.profile);
+    }
+    private async  status(request: Request, response: Response) {
+        response.send({message:'Welcome to School MS'});
+        
     }
     private async enroll(request: Request, response: Response) {
         try {

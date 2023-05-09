@@ -49,6 +49,7 @@ export class App {
     }
 
     public async listen() {
+        console.log('connection');
         const { db, client } = await database.connect();
         console.log("migration started", MONGO_CONNECTION_URI);
         await up(db, client);
