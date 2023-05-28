@@ -2,24 +2,21 @@ module.exports = {
     validator: {
         $jsonSchema: {
             bsonType: "object",
-            required: ["email"],
+            required: ["courseName"],
             properties: {
-                cognitoId: {
-                    bsonType: "string",
-                },
-                name: {
+                courseId: {
                     bsonType: "string",
                 },
                 cognitoSid: {
                     bsonType: "string",
                 },
-                email: {
+                cognitoId: {
                     bsonType: "string",
                 },
-                mobile: {
+                courseName: {
                     bsonType: "string",
                 },
-                userType: {
+                courseContent: {
                     bsonType: "string",
                 },
             },

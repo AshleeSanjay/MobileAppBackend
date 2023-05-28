@@ -5,8 +5,8 @@ import { BaseController } from "./base_controller";
 import { dbSchoolApp } from "../../app";
 import { authorizationMiddleware } from "./middlewares/authorizationMiddleware";
 
-export class StudentController implements BaseController {
-    public basePath = "/Student";
+export class CourseController implements BaseController {
+    public basePath = "/Course";
     public router: express.Router;
 
     constructor() {
@@ -15,34 +15,32 @@ export class StudentController implements BaseController {
     }
 
     private async initialzeRoutes() {
-        this.router.post(`${this.basePath}/enroll`, this.enroll);
-        this.router.use(`${this.basePath}/profile`, authorizationMiddleware);
-        this.router.get(`${this.basePath}/profile`, this.profile);
+        this.router.post(`${this.basePath}/addCourse`, this.addCourse);
+        this.router.get(`${this.basePath}/viewCourse`, this.viewCourse);
     }
-    private async enroll(request: Request, response: Response) {
+    private async addCourse(request: Request, response: Response) {
         try {
-            await dbSchoolApp.collection("student").insertOne({
+            await dbSchoolApp.collection("course").insertOne({
+                courseId: request.body.courseId,
                 cognitoSid: request.body.cognitoSid,
                 cognitoId: request.body.cognitoId,
-                name: request.body.name,
-                email: request.body.email,
-                mobile: request.body.mobile,
-                userType: request.body.userType,
+                courseName: request.body.courseName,
+                courseContent: request.body.courseContent,
             });
             console.log(
                 request.query,
                 "Dd collection: ",
                 dbSchoolApp.databaseName
             );
-            response.send("Enroll Student");
+            response.send("Add Course");
         } catch (error) {
             response.status(500).send({ error: `${error}` });
         }
     }
-    private async profile(request: Request, response: Response) {
+    private async viewCourse(request: Request, response: Response) {
         try {
-            console.log("Student Profile");
-            const cursor = await dbSchoolApp.collection("student").findOne({
+            console.log("View Course");
+            const cursor = await dbSchoolApp.collection("course").findOne({
                 email: request.query.email,
             });
             console.log(cursor);
