@@ -4,9 +4,6 @@ module.exports = {
             bsonType: "object",
             required: ["courseName"],
             properties: {
-                courseId: {
-                    bsonType: "string",
-                },
                 cognitoSid: {
                     bsonType: "string",
                 },
@@ -17,6 +14,12 @@ module.exports = {
                     bsonType: "string",
                 },
                 courseContent: {
+                    bsonType: "string",
+                },
+                userType: {
+                    bsonType: "string",
+                },
+                flag: {
                     bsonType: "string",
                 },
             },
