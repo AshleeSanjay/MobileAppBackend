@@ -70,4 +70,6 @@ dist/
 .DS_Store
 *.csv
 
+.aws-sam/
+
 config

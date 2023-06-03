@@ -7,6 +7,6 @@
         "./dist"
     ],
     "watch": ["lib/**/*", "*.ts", "types/*.ts"],
-    "exec": "ts-node server.ts",
+    "exec": "ts-node lambda.ts",
     "ext": "ts"
 }
