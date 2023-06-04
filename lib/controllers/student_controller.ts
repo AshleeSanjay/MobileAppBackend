@@ -18,6 +18,10 @@ export class StudentController implements BaseController {
         this.router.post(`${this.basePath}/enroll`, this.enroll);
         this.router.use(`${this.basePath}/profile`, authorizationMiddleware);
         this.router.get(`${this.basePath}/profile`, this.profile);
+        this.router.get(
+            `${this.basePath}/viewSubmittedStudents`,
+            this.viewSubmittedStudents
+        );
     }
     private async enroll(request: Request, response: Response) {
         try {
@@ -28,6 +32,7 @@ export class StudentController implements BaseController {
                 email: request.body.email,
                 mobile: request.body.mobile,
                 userType: request.body.userType,
+                assignmentId: request.body.assignmentId,
             });
             console.log(
                 request.query,
@@ -52,5 +57,20 @@ export class StudentController implements BaseController {
         }
         // console.log(request.query);
         // response.send("Student Profile");
+    }
+    private async viewSubmittedStudents(request: Request, response: Response) {
+        try {
+            console.log("View Submitted Students");
+            const cursor = await dbSchoolApp
+                .collection("student")
+                .find({
+                    assignmentId: request.query.assignmentId,
+                })
+                .toArray();
+            console.log(cursor);
+            response.send(cursor);
+        } catch (error) {
+            response.status(500).json({ error: `${error}` });
+        }
     }
 }
