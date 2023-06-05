@@ -24,15 +24,24 @@ export class AssignmentController implements BaseController {
             `${this.basePath}/submittedAssignmentList`,
             this.submittedAssignmentList
         );
-        this.router.get(
-            `${this.basePath}/viewStudentCourseList`,
-            this.viewStudentCourseList
-        );
+
         this.router.get(
             `${this.basePath}/viewSubmittedAssignment`,
             this.viewSubmittedAssignment
         );
-        this.router.patch(`${this.basePath}/updateCourse`, this.updateCourse);
+        this.router.get(
+            `${this.basePath}/viewAssignmentList`,
+            this.viewAssignmentList
+        );
+        this.router.get(`${this.basePath}/viewAssignment`, this.viewAssignment);
+        this.router.get(
+            `${this.basePath}/viewStudentAssignment`,
+            this.viewStudentAssignment
+        );
+        this.router.patch(
+            `${this.basePath}/updateAssignment`,
+            this.updateAssignment
+        );
     }
     private async addAssignment(request: Request, response: Response) {
         console.log("body!!!!", request.body);
@@ -87,30 +96,38 @@ export class AssignmentController implements BaseController {
             response.status(500).json({ error: `${error}` });
         }
     }
-    private async viewStudentCourseList(request: Request, response: Response) {
-        try {
-            console.log("View StudentCourse");
-            const cursor = await dbSchoolApp
-                .collection("course")
-                .find()
-                .toArray();
-            console.log(cursor);
-            response.send(cursor);
-        } catch (error) {
-            response.status(500).json({ error: `${error}` });
-        }
-    }
+
     private async viewSubmittedAssignment(
         request: Request,
         response: Response
     ) {
         const { MongoClient, ObjectId } = require("mongodb");
         try {
-            console.log("View Submitted Assignment");
+            console.log(
+                "View Submitted Assignment - assignment id: ",
+                request.query.assignmentId + "student Id: ",
+                request.query.cognitoSid
+            );
             const cursor = await dbSchoolApp.collection("assignment").findOne({
                 _id: new ObjectId(request.query.assignmentId),
                 cognitoSid: request.query.cognitoSid,
             });
+            console.log(cursor);
+            response.send(cursor);
+        } catch (error) {
+            response.status(500).json({ error: `${error}` });
+        }
+    }
+    private async viewAssignmentList(request: Request, response: Response) {
+        const { MongoClient, ObjectId } = require("mongodb");
+        try {
+            console.log("View Assignment List");
+            const cursor = await dbSchoolApp
+                .collection("assignment")
+                .find({
+                    cognitoSid: request.query.cognitoSid,
+                })
+                .toArray();
 
             console.log(cursor);
             response.send(cursor);
@@ -118,20 +135,55 @@ export class AssignmentController implements BaseController {
             response.status(500).json({ error: `${error}` });
         }
     }
-    private async updateCourse(request: Request, response: Response) {
+    private async viewAssignment(request: Request, response: Response) {
+        const { MongoClient, ObjectId } = require("mongodb");
         try {
-            const { MongoClient, ObjectId } = require("mongodb");
             console.log(
-                "Update Course: cognitoSid - ",
-                request.body.cognitoSid + ", courseId - ",
-                request.query.courseId
+                "View  Assignment - assignment id: ",
+                request.query.assignmentId
             );
             const cursor = await dbSchoolApp
-                .collection("course")
-                .updateOne(
-                    { _id: new ObjectId(request.query.courseId) },
-                    { $set: { cognitoSid: request.body.cognitoSid } }
-                );
+                .collection("assignment")
+                .find({
+                    courseId: request.query.courseId,
+                })
+                .toArray();
+            console.log(cursor);
+            response.send(cursor);
+        } catch (error) {
+            response.status(500).json({ error: `${error}` });
+        }
+    }
+    private async viewStudentAssignment(request: Request, response: Response) {
+        const { MongoClient, ObjectId } = require("mongodb");
+        try {
+            console.log(
+                "View Student Assignment - assignment id: ",
+                request.query.assignmentId
+            );
+            const cursor = await dbSchoolApp.collection("assignment").findOne({
+                _id: new ObjectId(request.query.assignmentId),
+            });
+            console.log(cursor);
+            response.send(cursor);
+        } catch (error) {
+            response.status(500).json({ error: `${error}` });
+        }
+    }
+    private async updateAssignment(request: Request, response: Response) {
+        try {
+            const { MongoClient, ObjectId } = require("mongodb");
+            console.log("Update assignment");
+            const cursor = await dbSchoolApp.collection("assignment").updateOne(
+                { _id: new ObjectId(request.query.assignmentId) },
+                {
+                    $set: {
+                        cognitoSid: request.body.cognitoSid,
+                        answerOne: request.body.answerOne,
+                        answerTwo: request.body.answerTwo,
+                    },
+                }
+            );
             response.json({ status: 200 });
         } catch (error) {
             response.status(500).json({ error: `${error}` });
