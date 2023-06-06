@@ -29,6 +29,10 @@ export class CourseController implements BaseController {
             `${this.basePath}/viewEnrolledCourseList`,
             this.viewEnrolledCourseList
         );
+        this.router.get(
+            `${this.basePath}/viewEnrolledCourse`,
+            this.viewEnrolledCourse
+        );
         this.router.patch(`${this.basePath}/updateCourse`, this.updateCourse);
     }
     private async addCourse(request: Request, response: Response) {
@@ -54,6 +58,19 @@ export class CourseController implements BaseController {
         try {
             const { MongoClient, ObjectId } = require("mongodb");
             console.log("View Course", request.body.courseId);
+            const cursor = await dbSchoolApp.collection("course").findOne({
+                _id: new ObjectId(request.query.courseId),
+            });
+            console.log(cursor);
+            response.send(cursor);
+        } catch (error) {
+            response.status(500).json({ error: `${error}` });
+        }
+    }
+    private async viewEnrolledCourse(request: Request, response: Response) {
+        try {
+            const { MongoClient, ObjectId } = require("mongodb");
+            console.log("View Enrolled Course", request.body.courseId);
             const cursor = await dbSchoolApp.collection("course").findOne({
                 _id: new ObjectId(request.query.courseId),
             });
