@@ -173,7 +173,13 @@ export class AssignmentController implements BaseController {
     private async updateAssignment(request: Request, response: Response) {
         try {
             const { MongoClient, ObjectId } = require("mongodb");
-            console.log("Update assignment");
+            console.log(
+                "Update assignment: ",
+                request.query.assignmentId + ", SID: ",
+                request.body.cognitoSid + ", Ans 1: ",
+                request.body.answerOne + ", Ans 2: ",
+                request.body.answerTwo
+            );
             const cursor = await dbSchoolApp.collection("assignment").updateOne(
                 { _id: new ObjectId(request.query.assignmentId) },
                 {

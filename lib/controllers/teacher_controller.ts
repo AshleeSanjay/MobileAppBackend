@@ -19,10 +19,13 @@ export class TeacherController implements BaseController {
         this.router.post(`${this.basePath}/enroll`, this.enroll);
         this.router.use(`${this.basePath}/profile`, authorizationMiddleware);
         this.router.get(`${this.basePath}/profile`, this.profile);
+        this.router.patch(
+            `${this.basePath}/updateTeacherDetail`,
+            this.updateTeacherDetail
+        );
     }
-    private async  status(request: Request, response: Response) {
-        response.send({message:'Welcome to School MS'});
-        
+    private async status(request: Request, response: Response) {
+        response.send({ message: "Welcome to School MS" });
     }
     private async enroll(request: Request, response: Response) {
         try {
@@ -53,6 +56,24 @@ export class TeacherController implements BaseController {
             });
             console.log(cursor);
             response.send(cursor);
+        } catch (error) {
+            response.status(500).json({ error: `${error}` });
+        }
+    }
+    private async updateTeacherDetail(request: Request, response: Response) {
+        try {
+            const { MongoClient, ObjectId } = require("mongodb");
+            console.log("Update profile: ", request.query.teacherId);
+            const cursor = await dbSchoolApp.collection("teacher").updateOne(
+                { cognitoId: request.query.teacherId },
+                {
+                    $set: {
+                        name: request.body.name,
+                        mobile: request.body.mobile,
+                    },
+                }
+            );
+            response.json({ status: 200 });
         } catch (error) {
             response.status(500).json({ error: `${error}` });
         }
