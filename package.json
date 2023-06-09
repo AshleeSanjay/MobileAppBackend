@@ -9,13 +9,13 @@
         "lint": "eslint . --ext .ts",
         "lint:fix": "eslint . --fix --ext .ts",
         "lint:quiet": "eslint . --ext .ts --quiet",
+        "prebuild": "rimraf dist",
         "build": "tsc --build tsconfig.json",
         "start": "cross-env NODE_ENV=production node dist/lambda.js",
         "test": "jest --config ./jest.config.js",
         "test:watch": "npm run test -- --watch",
         "dev": "cross-env NODE_ENV=development nodemon",
-        "copy": "cp package.json dist/",
-        "prestart": "npm run build && npm run copy"
+        "copy": "cp package.json dist/"
     },
     "repository": {
         "type": "git",
@@ -51,6 +51,7 @@
         "eslint-plugin-prettier": "^4.2.1",
         "nodemon": "^2.0.22",
         "prettier": "^2.8.7",
+        "rimraf": "^5.0.1",
         "typescript": "^5.0.2"
     }
 }
