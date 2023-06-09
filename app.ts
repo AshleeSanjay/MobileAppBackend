@@ -49,12 +49,13 @@ export class App {
     }
 
     public async listen() {
-        console.log('connection');
-        const { db, client } = await database.connect();
-        console.log("migration started", MONGO_CONNECTION_URI);
-        await up(db, client);
-        await client.close();
-        console.log("migration successful");
+        // console.log("connection");
+        // const { db, client } = await database.connect();
+        // console.log("migration started", MONGO_CONNECTION_URI);
+
+        // await up(db, client);
+        // await client.close();
+        // console.log("migration successful");
         const connectionString = MONGO_CONNECTION_URI;
         const mongoClient = new MongoClient(connectionString);
         await mongoClient.connect().catch((err) => {
@@ -64,6 +65,11 @@ export class App {
 
         console.log("SUCCESS! connected to Mongo");
         dbSchoolApp = mongoClient.db("dev-schoolmobapp");
+
+        this.app.get("/health", (_, res) => {
+            return res.json({ status: "OK", uptime: process.uptime() });
+        });
+
         this.app.listen(this.port, () => {
             console.log(
                 `Server started at port ${this.port} in ${NODE_ENV} mode`
