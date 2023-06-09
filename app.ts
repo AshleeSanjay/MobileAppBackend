@@ -69,6 +69,9 @@ export class App {
         this.app.get("/health", (_, res) => {
             return res.json({ status: "OK", uptime: process.uptime() });
         });
+        this.app.get("/", (_, res) => {
+            return res.json({ foo: "bar" });
+        });
 
         this.app.listen(this.port, () => {
             console.log(
