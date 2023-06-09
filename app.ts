@@ -70,7 +70,7 @@ export class App {
             return res.json({ status: "OK", uptime: process.uptime() });
         });
         this.app.get("/", (_, res) => {
-            return res.json({ foo: "bar" });
+            return res.json({ foo: "bazz" });
         });
 
         this.app.listen(this.port, () => {
