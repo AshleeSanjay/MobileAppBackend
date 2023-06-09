@@ -11,7 +11,7 @@ import { AssignmentController } from "./lib/controllers/assignment_controller";
 
 dns.setDefaultResultOrder("ipv4first");
 
-const app = new App(USER_SERVICE_PORT ?? "", [
+const app = new App(USER_SERVICE_PORT ?? "4000", [
     new HomeController(),
     new TeacherController(),
     new StudentController(),
