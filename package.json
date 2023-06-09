@@ -17,16 +17,8 @@
         "dev": "cross-env NODE_ENV=development nodemon",
         "copy": "cp package.json dist/"
     },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/AlenDavis/school-ms.git"
-    },
     "author": "",
     "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/AlenDavis/school-ms/issues"
-    },
-    "homepage": "https://github.com/AlenDavis/school-ms#readme",
     "dependencies": {
         "aws-jwt-verify": "^4.0.0",
         "aws-serverless-express": "^3.4.0",
