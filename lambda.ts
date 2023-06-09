@@ -4,14 +4,14 @@ import dns from "node:dns";
 
 import { HomeController } from "./lib/controllers/home_controller";
 import { TeacherController } from "./lib/controllers/teacher_controller";
-import { USER_SERVICE_PORT } from "./constants";
+import { SERVER_PORT } from "./constants";
 import { StudentController } from "./lib/controllers/student_controller";
 import { CourseController } from "./lib/controllers/course_controller";
 import { AssignmentController } from "./lib/controllers/assignment_controller";
 
 dns.setDefaultResultOrder("ipv4first");
 
-const app = new App(USER_SERVICE_PORT ?? "4000", [
+const app = new App(SERVER_PORT ?? "4000", [
     new HomeController(),
     new TeacherController(),
     new StudentController(),
