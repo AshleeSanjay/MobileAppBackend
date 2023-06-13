@@ -17,6 +17,15 @@ import {
 
 import cors from "cors";
 
+const filePaths = {
+    terms: IS_DEV
+        ? "/public/privacy-policy.html"
+        : "../public/terms-condition.html",
+    privacyPolicy: IS_DEV
+        ? "/public/privacy-policy.html"
+        : "../public/privacy-policy.html",
+} as const;
+
 export let dbSchoolApp: Db;
 export class App {
     public port: string;
@@ -72,15 +81,11 @@ export class App {
 
         this.app.get("/privacy-policy", (_, res) => {
             console.log(__dirname);
-            return res.sendFile(
-                path.join(__dirname, "/public/privacy-policy.html")
-            );
+            return res.sendFile(path.join(__dirname, filePaths.privacyPolicy));
         });
         this.app.get("/terms-conditions", (_, res) => {
             console.log(__dirname);
-            return res.sendFile(
-                path.join(__dirname, "/public/terms-condition.html")
-            );
+            return res.sendFile(path.join(__dirname, filePaths.terms));
         });
         this.app.get("/health", (_, res) => {
             return res.json({ status: "OK", uptime: process.uptime() });
