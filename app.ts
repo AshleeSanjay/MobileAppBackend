@@ -49,13 +49,13 @@ export class App {
     }
 
     public async listen() {
-        // console.log("connection");
-        // const { db, client } = await database.connect();
-        // console.log("migration started", MONGO_CONNECTION_URI);
+        console.log("connection");
+        const { db, client } = await database.connect();
+        console.log("migration started", MONGO_CONNECTION_URI);
 
-        // await up(db, client);
-        // await client.close();
-        // console.log("migration successful");
+        await up(db, client);
+        await client.close();
+        console.log("migration successful");
         const connectionString = MONGO_CONNECTION_URI;
         const mongoClient = new MongoClient(connectionString);
         await mongoClient.connect().catch((err) => {

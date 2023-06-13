@@ -26,6 +26,10 @@ export class StudentController implements BaseController {
             `${this.basePath}/updateStudentDetail`,
             this.updateStudentDetail
         );
+        this.router.patch(
+            `${this.basePath}/updateSubmittedStudents`,
+            this.updateSubmittedStudents
+        );
     }
     private async enroll(request: Request, response: Response) {
         try {
@@ -85,6 +89,26 @@ export class StudentController implements BaseController {
                     $set: {
                         name: request.body.name,
                         mobile: request.body.mobile,
+                    },
+                }
+            );
+            response.json({ status: 200 });
+        } catch (error) {
+            response.status(500).json({ error: `${error}` });
+        }
+    }
+    private async updateSubmittedStudents(
+        request: Request,
+        response: Response
+    ) {
+        try {
+            const { MongoClient, ObjectId } = require("mongodb");
+            console.log("Update profile: ", request.query.studentId);
+            const cursor = await dbSchoolApp.collection("student").updateOne(
+                { cognitoSid: request.query.studentId },
+                {
+                    $set: {
+                        assignmentId: request.body.assignmentId,
                     },
                 }
             );
