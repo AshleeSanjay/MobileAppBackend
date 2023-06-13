@@ -3,6 +3,7 @@ import { decode } from "html-entities";
 import { BaseController } from "./lib/controllers/base_controller";
 import { Db, MongoClient } from "mongodb";
 import { IS_DEV, MONGO_CONNECTION_URI, NODE_ENV } from "./constants";
+import path from "path";
 
 import {
     init,
@@ -69,6 +70,18 @@ export class App {
         console.log("SUCCESS! connected to Mongo");
         dbSchoolApp = mongoClient.db("dev-schoolmobapp");
 
+        this.app.get("/privacy-policy", (_, res) => {
+            console.log(__dirname);
+            return res.sendFile(
+                path.join(__dirname, "/public/privacy-policy.html")
+            );
+        });
+        this.app.get("/terms-conditions", (_, res) => {
+            console.log(__dirname);
+            return res.sendFile(
+                path.join(__dirname, "/public/terms-condition.html")
+            );
+        });
         this.app.get("/health", (_, res) => {
             return res.json({ status: "OK", uptime: process.uptime() });
         });
