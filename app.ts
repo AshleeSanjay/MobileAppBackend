@@ -2,7 +2,7 @@ import express from "express";
 import { decode } from "html-entities";
 import { BaseController } from "./lib/controllers/base_controller";
 import { Db, MongoClient } from "mongodb";
-import { MONGO_CONNECTION_URI, NODE_ENV } from "./constants";
+import { IS_DEV, MONGO_CONNECTION_URI, NODE_ENV } from "./constants";
 
 import {
     init,
@@ -49,13 +49,16 @@ export class App {
     }
 
     public async listen() {
-        console.log("connection");
-        const { db, client } = await database.connect();
-        console.log("migration started", MONGO_CONNECTION_URI);
+        if (IS_DEV) {
+            console.log("connection");
+            const { db, client } = await database.connect();
+            console.log("migration started", MONGO_CONNECTION_URI);
 
-        await up(db, client);
-        await client.close();
-        console.log("migration successful");
+            await up(db, client);
+            await client.close();
+            console.log("migration successful");
+        }
+
         const connectionString = MONGO_CONNECTION_URI;
         const mongoClient = new MongoClient(connectionString);
         await mongoClient.connect().catch((err) => {
